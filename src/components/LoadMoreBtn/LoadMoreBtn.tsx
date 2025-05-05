@@ -1,6 +1,12 @@
+import type { JSX } from "react";
+
 import styles from "./LoadMoreBtn.module.css";
 
-function LoadMoreBtn({ onClick }) {
+interface LoadMoreBtnProps {
+  onClick: () => void;
+}
+
+function LoadMoreBtn({ onClick }: LoadMoreBtnProps): JSX.Element {
   return (
     <div className={styles.wrapper}>
       <button className={styles.button} onClick={onClick}>

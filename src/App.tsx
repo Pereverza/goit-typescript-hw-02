@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 import { fetchImagesFromUnsplash } from "./unsplash-api";
 import SearchBar from "./components/SearchBar/SearchBar";
@@ -7,16 +7,19 @@ import Loader from "./components/Loader/Loader";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 import ImageModal from "./components/ImageModal/ImageModal";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
+import { UnsplashImage } from "./types";
 
 function App() {
-  const [images, setImages] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [query, setQuery] = useState("");
-  const [page, setPage] = useState(1);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [images, setImages] = useState<UnsplashImage[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [query, setQuery] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
+  const [selectedImage, setSelectedImage] = useState<UnsplashImage | null>(
+    null
+  );
 
-  const handleSearch = (searchQuery) => {
+  const handleSearch = (searchQuery: string) => {
     setQuery(searchQuery);
     setImages([]);
     setPage(1);
@@ -27,7 +30,7 @@ function App() {
     setPage((prev) => prev + 1);
   };
 
-  const handleImageClick = (image) => {
+  const handleImageClick = (image: UnsplashImage) => {
     setSelectedImage(image);
   };
 
@@ -45,7 +48,7 @@ function App() {
 
         const fetchedImages = await fetchImagesFromUnsplash(query, page);
         setImages((prevImages) => [...prevImages, ...fetchedImages]);
-      } catch (err) {
+      } catch (err: any) {
         console.error("Fetch error:", err);
         setError("Something went wrong. Try again.");
       } finally {
@@ -74,7 +77,9 @@ function App() {
           isOpen={!!selectedImage}
           onRequestClose={handleCloseModal}
           imageUrl={selectedImage.urls?.regular}
-          alt={selectedImage.alt_description}
+          alt={
+            selectedImage.alt_description || "Image description not available"
+          }
         />
       )}
 

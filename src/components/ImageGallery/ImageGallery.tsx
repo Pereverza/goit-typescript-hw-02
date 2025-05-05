@@ -1,7 +1,18 @@
+import React from "react";
+
+import { UnsplashImage } from "../../types";
 import s from "./ImageGallery.module.css";
 import ImageCard from "../ImageCard/ImageCard";
 
-function ImageGallery({ images, onImageClick }) {
+interface ImageGalleryProps {
+  images: UnsplashImage[];
+  onImageClick: (image: UnsplashImage) => void;
+}
+
+const ImageGallery: React.FC<ImageGalleryProps> = ({
+  images,
+  onImageClick,
+}) => {
   return (
     <ul className={s.gallery}>
       {images.map((image) => (
@@ -11,6 +22,6 @@ function ImageGallery({ images, onImageClick }) {
       ))}
     </ul>
   );
-}
+};
 
 export default ImageGallery;

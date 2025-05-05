@@ -3,10 +3,21 @@ import { useEffect } from "react";
 import s from "./ImageModal.module.css";
 
 Modal.setAppElement("#root");
+interface ImageModalProps {
+  isOpen: boolean;
+  onRequestClose: () => void;
+  imageUrl: string;
+  alt: string;
+}
 
-function ImageModal({ isOpen, onRequestClose, imageUrl, alt }) {
+function ImageModal({
+  isOpen,
+  onRequestClose,
+  imageUrl,
+  alt,
+}: ImageModalProps) {
   useEffect(() => {
-    const handleEsc = (e) => {
+    const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         onRequestClose();
       }

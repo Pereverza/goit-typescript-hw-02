@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import toast from "react-hot-toast";
 import s from "./SearchBar.module.css";
 
-const SearchBar = ({ onSubmit }) => {
-  const [input, setInput] = useState("");
+interface SearchBarProps {
+  onSubmit: (value: string) => void;
+}
 
-  const handleSubmit = (e) => {
+const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
+  const [input, setInput] = useState<string>("");
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const trimmedInput = input.trim();
