@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Toaster } from "react-hot-toast";
 import { fetchImagesFromUnsplash } from "./unsplash-api";
 import SearchBar from "./components/SearchBar/SearchBar";
@@ -7,7 +7,7 @@ import Loader from "./components/Loader/Loader";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 import ImageModal from "./components/ImageModal/ImageModal";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
-import { UnsplashImage } from "./types";
+import { UnsplashImage, UnsplashApiResponse } from "./types";
 
 function App() {
   const [images, setImages] = useState<UnsplashImage[]>([]);
@@ -34,20 +34,20 @@ function App() {
     setSelectedImage(image);
   };
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setSelectedImage(null);
-  };
+  }, [setSelectedImage]);
 
   useEffect(() => {
     if (!query) return;
 
     const fetchImages = async () => {
+      setIsLoading(true);
+      setError(null);
       try {
-        setIsLoading(true);
-        setError(null);
-
         const fetchedImages = await fetchImagesFromUnsplash(query, page);
-        setImages((prevImages) => [...prevImages, ...fetchedImages]);
+        const fetchedData: UnsplashApiResponse = fetchedImages;
+        setImages((prevImages) => [...prevImages, ...fetchedData.results]);
       } catch (err: any) {
         console.error("Fetch error:", err);
         setError("Something went wrong. Try again.");

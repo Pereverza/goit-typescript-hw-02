@@ -44,3 +44,8 @@ export interface UnsplashImage {
     download_location: string;
   };
 }
+export interface UnsplashApiResponse {
+  total: number;
+  total_pages: number;
+  results: UnsplashImage[];
+}
