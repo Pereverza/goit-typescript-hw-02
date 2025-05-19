@@ -45,9 +45,9 @@ function App() {
       setIsLoading(true);
       setError(null);
       try {
-        const fetchedImages = await fetchImagesFromUnsplash(query, page);
-        const fetchedData: UnsplashApiResponse = fetchedImages;
-        setImages((prevImages) => [...prevImages, ...fetchedData.results]);
+        const fetchedImages: UnsplashApiResponse =
+          await fetchImagesFromUnsplash(query, page);
+        setImages((prevImages) => [...prevImages, ...fetchedImages.results]);
       } catch (err: any) {
         console.error("Fetch error:", err);
         setError("Something went wrong. Try again.");

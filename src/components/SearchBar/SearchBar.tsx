@@ -1,4 +1,4 @@
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
 import toast from "react-hot-toast";
 import s from "./SearchBar.module.css";
 
@@ -21,6 +21,11 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
     onSubmit(trimmedInput);
     setInput("");
   };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+  };
+
   return (
     <header className={s.header}>
       <form onSubmit={handleSubmit} className={s.form}>
@@ -31,7 +36,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
           autoFocus
           placeholder="Search images and photos"
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={handleChange}
         />
         <button type="submit" className={s.button}>
           Search
@@ -40,4 +45,5 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
     </header>
   );
 };
+
 export default SearchBar;

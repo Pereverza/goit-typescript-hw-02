@@ -1,8 +1,9 @@
+import React, { useEffect } from "react";
 import Modal from "react-modal";
-import { useEffect } from "react";
 import s from "./ImageModal.module.css";
 
 Modal.setAppElement("#root");
+
 interface ImageModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
@@ -10,12 +11,12 @@ interface ImageModalProps {
   alt: string;
 }
 
-function ImageModal({
+const ImageModal: React.FC<ImageModalProps> = ({
   isOpen,
   onRequestClose,
   imageUrl,
   alt,
-}: ImageModalProps) {
+}) => {
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -37,6 +38,6 @@ function ImageModal({
       <img src={imageUrl} alt={alt} className={s.image} />
     </Modal>
   );
-}
+};
 
 export default ImageModal;
